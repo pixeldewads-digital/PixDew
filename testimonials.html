@@ -1,58 +1,86 @@
 <!doctype html>
 <html lang="id">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Testimoni — PixelDew</title>
-    <meta name="theme-color" content="#00CED1">
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💧</text></svg>">
-  </head>
-  <body class="bg-pixel-light text-gray-800">
-    <header class="bg-white/90 backdrop-blur shadow sticky top-0 z-40">
-      <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-        <a href="./index.html" class="flex items-center gap-3">
-          <span class="w-10 h-10 bg-gradient-to-tr from-pixel-mint via-pixel-blue to-pixel-teal rounded-lg grid place-items-center text-white text-xl font-bold">💧</span>
-          <span class="text-2xl font-bold">PixelDew</span>
-        </a>
-        <nav class="hidden md:flex gap-8">
-          <a href="./index.html" class="hover:text-pixel-cyan">Beranda</a>
-          <a href="./products.html" class="hover:text-pixel-cyan">Produk</a>
-          <a href="./about.html" class="hover:text-pixel-cyan">Tentang</a>
-          <a href="./testimonials.html" class="hover:text-pixel-cyan">Testimoni</a>
-          <a href="./contact.html" class="hover:text-pixel-cyan">Kontak</a>
-        </nav>
-      </div>
-    </header>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PixelDew — Produk Digital</title>
+  <meta name="description" content="Template, plugin, e-book, dan aset digital untuk bisnis modern.">
+  <meta name="theme-color" content="#00CED1">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💧</text></svg>">
+  <link rel="preconnect" href="https://cdn.tailwindcss.com">
+  <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'pixel-mint':'#7FFFD4','pixel-blue':'#87CEEB','pixel-teal':'#40E0D0','pixel-cyan':'#00CED1','pixel-light':'#F0FFFF'
+          },
+          fontFamily:{sans:['Inter','system-ui','sans-serif']}
+        }
+      }
+    }
+  </script>
+  <style>
+    .gradient-bg{{background:linear-gradient(135deg,#7FFFD4 0%,#87CEEB 50%,#40E0D0 100%)}}
+    .hero-pattern{{background-image:radial-gradient(circle at 25% 25%,rgba(127,255,212,.1) 0%,transparent 50%),radial-gradient(circle at 75% 75%,rgba(64,224,208,.1) 0%,transparent 50%)}}
+    .card-hover{{transition:all .3s ease}}
+    .card-hover:hover{{transform:translateY(-5px);box-shadow:0 20px 40px rgba(64,224,208,.3)}}
+    .mobile-menu{{transform:translateX(-100%);transition:transform .3s ease}}
+    .mobile-menu.active{{transform:translateX(0)}}
+    body{{scroll-behavior:smooth}}
+  </style>
+</head>
+<body class="bg-pixel-light text-gray-800 font-sans">
 
-    <section class="bg-gradient-to-br from-pixel-mint via-pixel-blue to-pixel-teal text-white text-center py-16">
-      <div class="max-w-4xl mx-auto px-6">
-        <h1 class="text-3xl md:text-5xl font-extrabold">Testimoni</h1>
-        <p class="opacity-90 mt-3">Halaman dummy untuk struktur awal website PixelDew.</p>
-      </div>
-    </section>
+  <header class="bg-white/90 backdrop-blur shadow sticky top-0 z-40">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="./index.html" class="flex items-center gap-3">
+        <span class="w-10 h-10 gradient-bg rounded-lg grid place-items-center text-white text-xl font-bold">💧</span>
+        <span class="text-2xl font-bold text-gray-800">PixelDew</span>
+      </a>
+      <nav class="hidden md:flex gap-8">
+        <a href="./index.html" class="hover:text-pixel-cyan">Beranda</a>
+        <a href="./products.html" class="hover:text-pixel-cyan">Produk</a>
+        <a href="./about.html" class="hover:text-pixel-cyan">Tentang</a>
+        <a href="./testimonials.html" class="hover:text-pixel-cyan">Testimoni</a>
+        <a href="./contact.html" class="hover:text-pixel-cyan">Kontak</a>
+      </nav>
+      <button id="menu-btn" class="md:hidden p-2" aria-label="Buka menu">☰</button>
+    </div>
+    <div id="mobile-menu" class="mobile-menu fixed top-0 left-0 w-64 h-full bg-white shadow-xl z-50 md:hidden p-6 space-y-4">
+      <button id="close-menu" class="text-gray-500 float-right">✕</button>
+      <a href="./index.html" class="block hover:text-pixel-cyan">Beranda</a>
+      <a href="./products.html" class="block hover:text-pixel-cyan">Produk</a>
+      <a href="./about.html" class="block hover:text-pixel-cyan">Tentang</a>
+      <a href="./testimonials.html" class="block hover:text-pixel-cyan">Testimoni</a>
+      <a href="./contact.html" class="block hover:text-pixel-cyan">Kontak</a>
+    </div>
+  </header>
+  <script>
+    document.addEventListener('DOMContentLoaded',()=>{ 
+      const menu=document.getElementById('mobile-menu');
+      const btn=document.getElementById('menu-btn');
+      const close=document.getElementById('close-menu');
+      if(btn&&menu&&close){ btn.onclick=()=>menu.classList.add('active'); close.onclick=()=>menu.classList.remove('active'); }
+    });
+  </script>
 
-    <main class="max-w-6xl mx-auto px-6 py-12">
-      
-  <div class="grid md:grid-cols-3 gap-6">
-    <article class="bg-white rounded-2xl shadow p-6">
-      <p class="text-gray-700">“Template-nya mantap dan mudah di-custom.”</p>
-      <p class="mt-3 font-semibold">— Ahmad, Web Dev</p>
-    </article>
-    <article class="bg-white rounded-2xl shadow p-6">
-      <p class="text-gray-700">“Plugin SEO-nya ngangkat traffic toko saya.”</p>
-      <p class="mt-3 font-semibold">— Sari, Marketer</p>
-    </article>
-    <article class="bg-white rounded-2xl shadow p-6">
-      <p class="text-gray-700">“E-booknya to the point & actionable.”</p>
-      <p class="mt-3 font-semibold">— Budi, Entrepreneur</p>
-    </article>
-  </div>
-  
-    </main>
-
-    <footer class="bg-gray-900 text-white text-center py-6">&copy; 2025 PixelDew</footer>
-
-    <!-- Vite entry (Tailwind compiled) -->
-    <script type="module" src="/src/main.js"></script>
-  </body>
+<section class="bg-gradient-to-br from-pixel-mint via-pixel-blue to-pixel-teal text-white text-center py-16">
+  <h1 class="text-3xl md:text-5xl font-extrabold">Testimoni</h1>
+</section>
+<main class="max-w-6xl mx-auto px-6 py-12 grid md:grid-cols-3 gap-8">
+  <article class="bg-white rounded-2xl shadow-lg p-6">
+    <p>"Template-nya mudah dipakai dan clean."</p><p class="mt-3 font-semibold">— Ahmad, Dev</p>
+  </article>
+  <article class="bg-white rounded-2xl shadow-lg p-6">
+    <p>"Plugin SEO-nya ngangkat traffic."</p><p class="mt-3 font-semibold">— Sari, Marketer</p>
+  </article>
+  <article class="bg-white rounded-2xl shadow-lg p-6">
+    <p>"E‑booknya to the point."</p><p class="mt-3 font-semibold">— Budi, Owner</p>
+  </article>
+</main>
+  <footer class="bg-gray-900 text-white text-center py-8 mt-16">&copy; 2025 PixelDew</footer>
+</body>
 </html>
