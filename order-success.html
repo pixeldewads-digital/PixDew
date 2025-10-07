@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PixelDew — Pesanan Berhasil</title>
+  <link rel="preconnect" href="https://cdn.tailwindcss.com"><link rel="dns-prefetch" href="https://cdn.tailwindcss.com"><script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { theme: { extend: { colors: { brand:'#22C55E','brand-dark':'#16A34A', ink:'#111827' }, fontFamily:{sans:['Inter','system-ui','sans-serif']} } } };</script>
+  <style>.brand-gradient{background:linear-gradient(135deg,#22C55E 0%,#16A34A 100%)}</style>
+</head>
+<body class="bg-white text-ink font-sans">
+  <section class="brand-gradient text-white text-center py-20">
+    <h1 class="text-4xl font-extrabold">Terima Kasih!</h1>
+    <p class="opacity-90 mt-2">Pesanan Anda berhasil dibuat</p>
+  </section>
+
+  <main class="max-w-xl mx-auto px-6 -mt-10">
+    <div class="bg-white rounded-2xl shadow p-8 text-center">
+      <div class="text-6xl">✅</div>
+      <h2 class="text-2xl font-bold mt-3">Pembayaran Diproses</h2>
+      <p class="text-gray-600 mt-2">Total: <span id="sum" class="font-semibold"></span></p>
+      <p class="text-gray-600 mt-1">Invoice: <span id="inv" class="font-semibold"></span></p>
+      <p class="text-gray-600 mt-1">Email tujuan: <span id="mail" class="font-semibold"></span></p>
+
+      <div class="mt-6 flex gap-3 justify-center">
+        <button id="download-invoice" class="px-5 py-3 rounded-lg border">Download Invoice</button>
+        <a href="./products.html" class="px-5 py-3 rounded-lg border">Belanja Lagi</a>
+        <a href="./index.html" class="px-5 py-3 rounded-lg bg-brand text-white">Kembali ke Beranda</a>
+      </div>
+
+      <p class="text-xs text-gray-500 mt-4">Link download & lisensi akan dikirim ke email. Jika belum masuk, cek folder spam/promosi.</p>
+    </div>
+  </main>
+
+  <script src="./assets/cart.js"></script>
+  <script>
+    const last = JSON.parse(localStorage.getItem('pixdew_last_order') || 'null');
+    const fmt = new Intl.NumberFormat('id-ID',{style:'currency',currency:'IDR',maximumFractionDigits:0});
+    if(last){
+      document.getElementById('sum').textContent  = fmt.format(last.total||0);
+      document.getElementById('mail').textContent = last.email || '-';
+      document.getElementById('inv').textContent  = last.invoiceNo || '-';
+      document.getElementById('download-invoice').addEventListener('click', ()=> {
+        if(window.PixeldewInvoice){ window.PixeldewInvoice.download(last); }
+      });
+    } else {
+      document.getElementById('sum').textContent  = 'Rp 0';
+      document.getElementById('mail').textContent = '-';
+      document.getElementById('inv').textContent  = '-';
+      document.getElementById('download-invoice').disabled = true;
+    }
+  </script>
+</body>
+</html>
