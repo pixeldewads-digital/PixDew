@@ -61,6 +61,22 @@
       <a href="./testimonials.html" class="block hover:text-brand">Testimoni</a>
       <a href="./contact.html" class="block hover:text-brand">Kontak</a>
     </div>
+    <!-- === Cart Icon Header === -->
+<div class="ml-6 relative">
+  <button id="cart-trigger" class="relative flex items-center hover:text-brand transition">
+    <!-- SVG Icon -->
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+      stroke-width="2" stroke="currentColor" class="w-6 h-6">
+      <path stroke-linecap="round" stroke-linejoin="round"
+        d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.3 5H19m-12 0a1 1 0 102 0 1 1 0 00-2 0zm10 0a1 1 0 102 0 1 1 0 00-2 0z" />
+    </svg>
+
+    <!-- Counter -->
+    <span id="cart-count"
+      class="absolute -top-2 -right-3 bg-brand text-white text-xs font-bold rounded-full px-1.5 hidden">0</span>
+  </button>
+</div>
+
   </header>
   <script>
     document.addEventListener('DOMContentLoaded',()=>{ 
