@@ -1,23 +1,18 @@
-# PixelDew — Static Site
+# PixelDew — Vite + Tailwind (GitHub Pages)
 
-Live (GitHub Pages): https://USERNAME.github.io/pixeldew/  
-(ganti USERNAME)
+Build super cepat, otomatis deploy ke **GitHub Pages** via Actions.
 
-## Struktur
+## Pakai sebagai repo baru
+1. Upload semua file ini ke repo kamu (mis. `PixDew`).
+2. Edit `vite.config.ts/js` → `base: '/PixDew/'` (samakan dengan nama repo).
+3. Di repo GitHub: Settings → Pages → **Source: GitHub Actions** (jangan branch).
+4. Push ke `main` → Actions akan build & deploy → situs muncul di `https://USERNAME.github.io/PixDew/`.
+
+## Jalankan lokal (opsional)
+```bash
+npm i
+npm run dev
+# build
+npm run build
+npm run preview
 ```
-pixeldew/
-├─ index.html
-├─ 404.html           # opsional
-├─ .nojekyll          # opsional, kosongkan file ini
-└─ README.md
-```
-
-## Deploy
-1. Buat repo public `pixeldew` di GitHub.
-2. Upload file di atas.
-3. Settings → Pages → Branch: `main` (root) → Save.
-4. Akses: `https://USERNAME.github.io/pixeldew/`.
-
-## Catatan
-- Tailwind via CDN, tidak perlu build.
-- Ganti `og:image` jika punya.

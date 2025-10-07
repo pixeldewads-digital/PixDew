@@ -1,130 +1,56 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PixelDew - Produk Digital</title>
-  <meta name="description" content="PixelDew menyediakan template, plugin, e-book, dan aset digital untuk mengembangkan bisnis Anda.">
-  <meta name="theme-color" content="#00CED1">
-  <link rel="canonical" href="https://pixeldewads-digital.github.io/PixDew/">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💧</text></svg>">
-  <link rel="preconnect" href="https://cdn.tailwindcss.com">
-  <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            'pixel-cyan':'#00CED1','pixel-light':'#F0FFFF','pixel-blue':'#87CEEB','pixel-mint':'#7FFFD4','pixel-teal':'#40E0D0'
-          }
-        }
-      }
-    }
-  </script>
-  <style>
-    .gradient-bg{background:linear-gradient(135deg,#7FFFD4 0%,#87CEEB 50%,#40E0D0 100%)}
-    .card-hover{transition:all .3s ease}
-    .card-hover:hover{transform:translateY(-5px);box-shadow:0 20px 40px rgba(64,224,208,.3)}
-    .mobile-menu{transform:translateX(-100%);transition:transform .3s ease}
-    .mobile-menu.active{transform:translateX(0)}
-    body{scroll-behavior:smooth}
-  </style>
-</head>
-<body class="bg-pixel-light text-gray-800">
-
-  <!-- HEADER -->
-  <header class="bg-white/90 backdrop-blur shadow sticky top-0 z-40">
-    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-      <a href="#home" class="flex items-center gap-3">
-        <span class="w-10 h-10 gradient-bg rounded-lg grid place-items-center text-white text-xl font-bold">💧</span>
-        <span class="text-2xl font-bold">PixelDew</span>
-      </a>
-      <nav class="hidden md:flex gap-8">
-        <a href="#home" class="hover:text-pixel-cyan">Beranda</a>
-        <a href="#products" class="hover:text-pixel-cyan">Produk</a>
-        <a href="#contact" class="hover:text-pixel-cyan">Kontak</a>
-      </nav>
-      <button id="menu-btn" class="md:hidden p-2" aria-label="Buka menu">☰</button>
-    </div>
-    <div id="mobile-menu" class="mobile-menu fixed top-0 left-0 w-64 h-full bg-white shadow-xl z-50 md:hidden p-6 space-y-4">
-      <button id="close-menu" class="text-gray-500 float-right">✕</button>
-      <a href="#home" class="block hover:text-pixel-cyan">Beranda</a>
-      <a href="#products" class="block hover:text-pixel-cyan">Produk</a>
-      <a href="#contact" class="block hover:text-pixel-cyan">Kontak</a>
-    </div>
-  </header>
-
-  <!-- HERO -->
-  <section id="home" class="gradient-bg text-white text-center py-20">
-    <div class="max-w-3xl mx-auto px-6">
-      <h1 class="text-4xl md:text-5xl font-bold mb-4">Produk Digital Berkualitas</h1>
-      <p class="text-lg opacity-90 mb-8">Template, plugin, e‑book, dan aset kreatif untuk bisnis modern.</p>
-      <a href="#products" class="inline-block bg-white text-pixel-cyan px-8 py-3 rounded-full font-semibold">Jelajahi Produk</a>
-    </div>
-  </section>
-
-  <!-- PRODUCTS -->
-  <section id="products" class="py-16">
-    <div class="max-w-6xl mx-auto px-6">
-      <h2 class="text-3xl font-bold text-center mb-8">Produk Terlaris</h2>
-      <div class="flex flex-wrap justify-center gap-3 mb-10">
-        <button type="button" data-category="all" class="js-filter px-5 py-2 rounded-full bg-pixel-cyan text-white">Semua</button>
-        <button type="button" data-category="Template" class="js-filter px-5 py-2 rounded-full bg-white border">Template</button>
-        <button type="button" data-category="Plugin" class="js-filter px-5 py-2 rounded-full bg-white border">Plugin</button>
-        <button type="button" data-category="E-Book" class="js-filter px-5 py-2 rounded-full bg-white border">E-Book</button>
-        <button type="button" data-category="Assets" class="js-filter px-5 py-2 rounded-full bg-white border">Assets</button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PixelDew — Produk Digital</title>
+    <meta name="description" content="Template, plugin, e-book, dan aset digital untuk bisnis modern.">
+    <meta name="theme-color" content="#00CED1">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💧</text></svg>">
+  </head>
+  <body class="bg-pixel-light text-gray-800">
+    <header class="bg-white/90 backdrop-blur shadow sticky top-0 z-40">
+      <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+        <a href="#" class="flex items-center gap-3">
+          <span class="w-10 h-10 bg-gradient-to-tr from-pixel-mint via-pixel-blue to-pixel-teal rounded-lg grid place-items-center text-white text-xl font-bold">💧</span>
+          <span class="text-2xl font-bold">PixelDew</span>
+        </a>
+        <nav class="hidden md:flex gap-8">
+          <a href="#products" class="hover:text-pixel-cyan">Produk</a>
+          <a href="#contact" class="hover:text-pixel-cyan">Kontak</a>
+        </nav>
       </div>
-      <div id="grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-    </div>
-  </section>
+    </header>
 
-  <!-- CONTACT + FOOTER -->
-  <section id="contact" class="py-12 bg-white">
-    <div class="max-w-4xl mx-auto px-6 text-center">
-      <h2 class="text-2xl font-bold mb-3">Butuh Bantuan?</h2>
-      <p class="text-gray-600">Email: support@pixeldew.com</p>
-    </div>
-  </section>
-  <footer class="bg-gray-900 text-white text-center py-6">&copy; 2025 PixelDew</footer>
+    <section class="bg-gradient-to-br from-pixel-mint via-pixel-blue to-pixel-teal text-white text-center py-20">
+      <div class="max-w-3xl mx-auto px-6">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">Produk Digital Berkualitas</h1>
+        <p class="text-lg/relaxed opacity-90 mb-8">Template, plugin, e-book, dan aset kreatif untuk bisnis modern.</p>
+        <a href="#products" class="inline-block bg-white text-pixel-cyan px-8 py-3 rounded-full font-semibold">Jelajahi Produk</a>
+      </div>
+    </section>
 
-  <script>
-    // data minimal
-    const products=[
-      {id:1,name:"Template Website Modern",price:299000,category:"Template",emoji:"🎨"},
-      {id:2,name:"Plugin SEO Pro",price:199000,category:"Plugin",emoji:"🔧"},
-      {id:3,name:"E‑Book Digital Marketing",price:149000,category:"E-Book",emoji:"📚"},
-      {id:4,name:"Icon Pack Premium",price:99000,category:"Assets",emoji:"🎯"}
-    ];
+    <main class="max-w-6xl mx-auto px-6 py-16">
+      <section id="products" class="mb-16">
+        <h2 class="text-3xl font-bold text-center mb-6">Produk Terlaris</h2>
+        <div class="flex flex-wrap justify-center gap-3 mb-8">
+          <button type="button" data-category="all" class="js-filter px-5 py-2 rounded-full bg-pixel-cyan text-white">Semua</button>
+          <button type="button" data-category="Template" class="js-filter px-5 py-2 rounded-full bg-white border">Template</button>
+          <button type="button" data-category="Plugin" class="js-filter px-5 py-2 rounded-full bg-white border">Plugin</button>
+          <button type="button" data-category="E-Book" class="js-filter px-5 py-2 rounded-full bg-white border">E-Book</button>
+          <button type="button" data-category="Assets" class="js-filter px-5 py-2 rounded-full bg-white border">Assets</button>
+        </div>
+        <div id="grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+      </section>
 
-    const grid=document.getElementById('grid');
-    function render(cat='all'){
-      grid.innerHTML='';
-      products.filter(p=>cat==='all'||p.category===cat).forEach(p=>{
-        const el=document.createElement('article');
-        el.className='bg-white rounded-2xl shadow p-6 card-hover';
-        el.innerHTML=\`
-          <div class="text-5xl" aria-hidden="true">\${p.emoji}</div>
-          <h3 class="mt-3 text-lg font-semibold">\${p.name}</h3>
-          <p class="text-pixel-cyan font-bold mt-1">Rp \${p.price.toLocaleString('id-ID')}</p>\`;
-        grid.appendChild(el);
-      });
-    }
-    render();
+      <section id="contact" class="text-center">
+        <h2 class="text-2xl font-bold mb-2">Butuh Bantuan?</h2>
+        <p class="text-gray-600">Email: support@pixeldew.com</p>
+      </section>
+    </main>
 
-    document.querySelectorAll('.js-filter').forEach(b=>{
-      b.addEventListener('click',e=>{
-        document.querySelectorAll('.js-filter').forEach(x=>x.classList.remove('bg-pixel-cyan','text-white'));
-        e.currentTarget.classList.add('bg-pixel-cyan','text-white');
-        render(e.currentTarget.dataset.category);
-      });
-    });
+    <footer class="bg-gray-900 text-white text-center py-6">&copy; 2025 PixelDew</footer>
 
-    // mobile menu
-    const menu=document.getElementById('mobile-menu');
-    document.getElementById('menu-btn').onclick=()=>menu.classList.add('active');
-    document.getElementById('close-menu').onclick=()=>menu.classList.remove('active');
-  </script>
-</body>
+    <script type="module" src="/src/main.js"></script>
+  </body>
 </html>
-
