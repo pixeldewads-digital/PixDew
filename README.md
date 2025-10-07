@@ -1,9 +1,10 @@
-# PixelDew — Static Multi-page (Tailwind CDN)
-Langsung tampil di GitHub Pages (tanpa build).
+# PixelDew — Brand Green Static Site (Tailwind CDN)
+Warna disesuaikan brand (green), logo polos tanpa background.
 
 ## File
 - index.html, products.html, about.html, testimonials.html, contact.html
+- assets/logo.png, logo-512.png, apple-touch-icon.png, favicon-32.png, favicon-16.png
 - .nojekyll
 
 ## Deploy
-Upload file-file ini ke repo GitHub Pages kamu (root). Selesai.
+Upload semua file ke repo GitHub Pages (root). Selesai.
