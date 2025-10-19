@@ -1,0 +1,39 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="cubeGradient" x1="96" y1="88" x2="420" y2="428" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#3CFDA5"/>
+      <stop offset="1" stop-color="#1F9C54"/>
+    </linearGradient>
+    <linearGradient id="innerGradient" x1="160" y1="152" x2="352" y2="360" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#BBF7D0"/>
+      <stop offset="1" stop-color="#22C55E"/>
+    </linearGradient>
+    <linearGradient id="textGradient" x1="156" y1="460" x2="356" y2="460" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0F172A"/>
+      <stop offset="0.45" stop-color="#16A34A"/>
+      <stop offset="0.55" stop-color="#16A34A"/>
+      <stop offset="1" stop-color="#0F172A"/>
+    </linearGradient>
+    <filter id="shadow" x="64" y="72" width="344" height="344" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="22" stdDeviation="24" flood-color="#0F172A" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+  <g filter="url(#shadow)">
+    <rect x="96" y="96" width="288" height="288" rx="44" fill="url(#cubeGradient)"/>
+    <path d="M156 152C156 136.536 168.536 124 184 124H296C349.02 124 392 166.98 392 220V260C392 313.02 349.02 356 296 356H184C168.536 356 156 343.464 156 328V152Z" fill="#0B1629" opacity="0.55"/>
+    <rect x="156" y="152" width="196" height="208" rx="28" fill="url(#innerGradient)"/>
+    <rect x="208" y="200" width="120" height="120" rx="18" fill="#0B1629" opacity="0.9"/>
+  </g>
+  <g>
+    <rect x="320" y="120" width="52" height="52" rx="14" fill="#34D399"/>
+    <rect x="356" y="84" width="44" height="44" rx="14" fill="#22C55E"/>
+    <rect x="380" y="56" width="32" height="32" rx="10" fill="#16A34A"/>
+    <rect x="404" y="40" width="20" height="20" rx="8" fill="#4ADE80"/>
+    <rect x="416" y="24" width="12" height="12" rx="5" fill="#A7F3D0"/>
+  </g>
+  <g transform="translate(0,408)">
+    <text x="50%" y="62" text-anchor="middle" font-family="'Space Grotesk', 'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="80" font-weight="700" letter-spacing="10" fill="url(#textGradient)">
+      PI<tspan fill="#0F172A">X</tspan>ELDEW
+    </text>
+  </g>
+</svg>
