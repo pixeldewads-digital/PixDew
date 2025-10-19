@@ -1,0 +1,915 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PixelDew Promo Studio</title>
+  <meta name="description" content="Buat poster promo sosial media yang dinamis langsung dari browser Anda."/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: '#22C55E',
+            'brand-dark': '#16A34A',
+            'brand-light': '#DCFCE7',
+            ink: '#111827'
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            display: ['Space Grotesk', 'Inter', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    .studio-shell {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .studio-container {
+      display: grid;
+      gap: 40px;
+      align-items: start;
+      grid-template-columns: minmax(0, 1fr) 580px;
+    }
+
+    .control-panel {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(18px);
+      border-radius: 24px;
+      padding: 32px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+
+    .panel-header {
+      margin: 0 0 32px 0;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 28px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #22C55E, #3B82F6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .template-showcase {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .template-card {
+      padding: 20px;
+      background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+      border: 2px solid transparent;
+      border-radius: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .template-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #22C55E, #3B82F6);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      border-radius: 14px;
+    }
+
+    .template-card:hover::before {
+      opacity: 0.12;
+    }
+
+    .template-card.active {
+      border-color: #22C55E;
+      background: linear-gradient(135deg, #f0fdf4, #ecfdf5);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(34, 197, 94, 0.18);
+    }
+
+    .template-card.active::before {
+      opacity: 0.06;
+    }
+
+    .template-card h4 {
+      margin: 0 0 8px 0;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      color: #1f2937;
+      position: relative;
+      z-index: 1;
+    }
+
+    .template-card p {
+      margin: 0;
+      font-size: 13px;
+      color: #6b7280;
+      position: relative;
+      z-index: 1;
+    }
+
+    .form-section {
+      margin-bottom: 24px;
+    }
+
+    .form-section h3 {
+      margin: 0 0 16px 0;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      color: #374151;
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+    }
+
+    .input-group label {
+      display: block;
+      font-weight: 500;
+      color: #4b5563;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .input-group input,
+    .input-group select {
+      width: 100%;
+      padding: 14px 18px;
+      border: 2px solid #e5e7eb;
+      border-radius: 12px;
+      font-size: 15px;
+      transition: all 0.2s ease;
+      background: white;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .input-group input:focus,
+    .input-group select:focus {
+      outline: none;
+      border-color: #22C55E;
+      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.12);
+    }
+
+    .style-controls {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .promo-stage {
+      position: sticky;
+      top: 24px;
+    }
+
+    .promo-canvas {
+      width: 100%;
+      max-width: 580px;
+      aspect-ratio: 1 / 1;
+      background: white;
+      border-radius: 32px;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      margin: 0 auto;
+    }
+
+    .promo-background {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #22C55E 0%, #16a34a 50%, #15803d 100%);
+      opacity: 0.95;
+    }
+
+    .promo-pattern {
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+      opacity: 0.8;
+      transition: opacity 0.2s ease;
+    }
+
+    .texture-geometric {
+      background-image:
+        linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%),
+        linear-gradient(-45deg, rgba(255,255,255,0.1) 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, rgba(255,255,255,0.1) 75%),
+        linear-gradient(-45deg, transparent 75%, rgba(255,255,255,0.1) 75%);
+      background-size: 40px 40px;
+      background-position: 0 0, 0 20px, 20px -20px, -20px 0px;
+    }
+
+    .texture-dots {
+      background-image: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.15) 2px, transparent 2px);
+      background-size: 30px 30px;
+    }
+
+    .texture-waves {
+      background-image:
+        repeating-linear-gradient(45deg, rgba(255,255,255,0.05) 0px, rgba(255,255,255,0.05) 2px, transparent 2px, transparent 20px),
+        repeating-linear-gradient(-45deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 2px, transparent 2px, transparent 20px);
+    }
+
+    .texture-hexagon {
+      background-image:
+        radial-gradient(circle at 25% 25%, rgba(255,255,255,0.1) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(255,255,255,0.08) 0%, transparent 50%),
+        linear-gradient(30deg, rgba(255,255,255,0.05) 12%, transparent 12.5%, transparent 87%, rgba(255,255,255,0.05) 87.5%);
+      background-size: 60px 60px, 60px 60px, 36px 62px;
+    }
+
+    .texture-circuit {
+      background-image:
+        linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px),
+        linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+        radial-gradient(circle at 20px 20px, rgba(255,255,255,0.15) 2px, transparent 2px);
+      background-size: 40px 40px, 40px 40px, 40px 40px;
+    }
+
+    .texture-organic {
+      background-image:
+        radial-gradient(ellipse at 20% 30%, rgba(255,255,255,0.1) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 70%, rgba(255,255,255,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse at 40% 80%, rgba(255,255,255,0.06) 0%, transparent 60%);
+      background-size: 120px 80px, 100px 120px, 80px 100px;
+    }
+
+    .texture-mesh {
+      background-image:
+        linear-gradient(0deg, rgba(255,255,255,0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+      background-size: 25px 25px;
+    }
+
+    .texture-noise {
+      background-image:
+        radial-gradient(circle at 10% 20%, rgba(255,255,255,0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255,255,255,0.05) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(255,255,255,0.08) 0%, transparent 50%),
+        radial-gradient(circle at 90% 10%, rgba(255,255,255,0.06) 0%, transparent 50%),
+        radial-gradient(circle at 30% 70%, rgba(255,255,255,0.04) 0%, transparent 50%);
+      background-size: 50px 50px, 80px 80px, 60px 60px, 40px 40px, 70px 70px;
+    }
+
+    .promo-content {
+      position: relative;
+      z-index: 10;
+      padding: 56px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .promo-header {
+      text-align: center;
+    }
+
+    .promo-eyebrow {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(12px);
+      padding: 8px 20px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 500;
+      color: white;
+      margin-bottom: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+    }
+
+    .promo-headline {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(44px, 6vw, 68px);
+      font-weight: 700;
+      color: white;
+      line-height: 0.9;
+      margin: 0 0 20px 0;
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      letter-spacing: -1px;
+    }
+
+    .promo-subheadline {
+      font-size: 20px;
+      color: rgba(255, 255, 255, 0.9);
+      margin: 0 0 40px 0;
+      font-weight: 400;
+    }
+
+    .promo-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .promo-badge {
+      width: 120px;
+      height: 120px;
+      background: #FACC15;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: #1f2937;
+      box-shadow: 0 10px 30px rgba(250, 204, 21, 0.4);
+      position: relative;
+      animation: pulse 2s infinite;
+      text-transform: uppercase;
+    }
+
+    .promo-badge::before {
+      content: '';
+      position: absolute;
+      inset: -10px;
+      background: rgba(250, 204, 21, 0.45);
+      border-radius: 50%;
+      z-index: -1;
+      animation: ping 2s infinite;
+    }
+
+    .promo-cta {
+      background: white;
+      color: #1f2937;
+      padding: 18px 36px;
+      border-radius: 999px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      position: relative;
+      overflow: hidden;
+      min-width: 200px;
+    }
+
+    .promo-cta::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .promo-cta:hover::before {
+      left: 100%;
+    }
+
+    .promo-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.22);
+    }
+
+    .promo-logo {
+      position: absolute;
+      bottom: 30px;
+      right: 30px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      color: white;
+      font-size: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      letter-spacing: 1px;
+    }
+
+    .export-section {
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .export-btn {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, #22C55E, #16a34a);
+      color: white;
+      border: none;
+      border-radius: 16px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 25px rgba(34, 197, 94, 0.3);
+    }
+
+    .export-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 35px rgba(34, 197, 94, 0.4);
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    @keyframes ping {
+      0% { transform: scale(1); opacity: 0.45; }
+      75%, 100% { transform: scale(1.2); opacity: 0; }
+    }
+
+    @media (max-width: 1200px) {
+      .studio-container {
+        grid-template-columns: 1fr;
+      }
+      .promo-stage {
+        position: static;
+      }
+      .promo-canvas {
+        max-width: 520px;
+      }
+      .template-showcase {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 768px) {
+      .studio-shell {
+        padding: 16px;
+      }
+      .template-showcase {
+        grid-template-columns: 1fr;
+      }
+      .style-controls {
+        grid-template-columns: 1fr;
+      }
+      .promo-content {
+        padding: 42px;
+      }
+      .promo-headline {
+        font-size: clamp(32px, 12vw, 44px);
+      }
+      .promo-footer {
+        flex-direction: column;
+      }
+      .promo-badge {
+        order: 2;
+      }
+      .promo-cta {
+        order: 1;
+        width: 100%;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body class="text-ink">
+<header class="bg-white/90 backdrop-blur shadow sticky top-0 z-40">
+  <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+    <a href="./index.html" class="flex items-center gap-3">
+      <img src="./assets/logo.png" alt="PixelDew" class="w-10 h-10 object-contain"/>
+      <span class="text-2xl font-bold text-ink">PixelDew</span>
+    </a>
+    <div class="flex items-center gap-6">
+      <nav class="hidden md:flex gap-8">
+        <a href="./index.html" class="hover:text-brand">Beranda</a>
+        <a href="./products.html" class="hover:text-brand">Produk</a>
+        <a href="./about.html" class="hover:text-brand">Tentang</a>
+        <a href="./testimonials.html" class="hover:text-brand">Testimoni</a>
+        <a href="./contact.html" class="hover:text-brand">Kontak</a>
+        <a href="./promo-studio.html" class="text-brand font-semibold">Promo Studio</a>
+      </nav>
+      <button id="cart-trigger" class="relative flex items-center justify-center w-9 h-9 rounded-full transition duration-300 text-ink hover:text-white hover:bg-gradient-to-r hover:from-brand hover:to-brand-dark" aria-label="Buka keranjang">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.3 5H19m-12 0a1 1 0 102 0 1 1 0 00-2 0m12 0a1 1 0 102 0 1 1 0 00-2 0"/>
+        </svg>
+        <span id="cart-count" class="absolute -top-1.5 -right-1.5 bg-brand text-white text-[10px] font-bold rounded-full px-1.5 hidden">0</span>
+      </button>
+      <button id="menu-btn" class="md:hidden p-2" aria-label="Buka menu">☰</button>
+    </div>
+  </div>
+  <div id="mobile-menu" class="mobile-menu fixed top-0 left-0 w-64 h-full bg-white shadow-xl z-50 md:hidden p-6 space-y-4 transform -translate-x-full transition-transform duration-300">
+    <button id="close-menu" class="text-gray-500 float-right" aria-label="Tutup menu">✕</button>
+    <a href="./index.html" class="block hover:text-brand">Beranda</a>
+    <a href="./products.html" class="block hover:text-brand">Produk</a>
+    <a href="./about.html" class="block hover:text-brand">Tentang</a>
+    <a href="./testimonials.html" class="block hover:text-brand">Testimoni</a>
+    <a href="./contact.html" class="block hover:text-brand">Kontak</a>
+    <a href="./promo-studio.html" class="block text-brand font-semibold">Promo Studio</a>
+  </div>
+</header>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const menu = document.getElementById('mobile-menu');
+    const open = document.getElementById('menu-btn');
+    const close = document.getElementById('close-menu');
+    if (menu && open && close) {
+      open.addEventListener('click', () => menu.classList.remove('-translate-x-full'));
+      close.addEventListener('click', () => menu.classList.add('-translate-x-full'));
+    }
+  });
+</script>
+
+<main class="studio-shell">
+  <div class="bg-white/20 rounded-3xl text-white px-6 py-6 mb-6">
+    <h1 class="text-3xl md:text-4xl font-bold font-display">Promo Studio</h1>
+    <p class="text-white/90 max-w-2xl mt-2">Kreasikan poster promo dalam hitungan detik. Pilih template, atur teks, ubah warna, dan ekspor PNG resolusi tinggi siap pakai untuk sosial media atau marketplace.</p>
+  </div>
+
+  <div class="studio-container">
+    <section class="control-panel" aria-labelledby="panel-title">
+      <h2 class="panel-header" id="panel-title">PixelDew Promo Studio</h2>
+
+      <div class="template-showcase" role="list">
+        <button class="template-card active" data-template="mega-sale" type="button">
+          <h4>🔥 Mega Sale</h4>
+          <p>Diskon besar-besaran</p>
+        </button>
+        <button class="template-card" data-template="flash-deal" type="button">
+          <h4>⚡ Flash Deal</h4>
+          <p>Promo kilat 24 jam</p>
+        </button>
+        <button class="template-card" data-template="new-drop" type="button">
+          <h4>✨ New Drop</h4>
+          <p>Rilis produk baru</p>
+        </button>
+        <button class="template-card" data-template="bundle-pack" type="button">
+          <h4>📦 Bundle Pack</h4>
+          <p>Penawaran paket hemat</p>
+        </button>
+        <button class="template-card" data-template="weekend-special" type="button">
+          <h4>🎉 Weekend Special</h4>
+          <p>Khusus akhir pekan</p>
+        </button>
+        <button class="template-card" data-template="clearance" type="button">
+          <h4>🏷️ Clearance</h4>
+          <p>Cuci gudang terakhir</p>
+        </button>
+      </div>
+
+      <div class="form-section">
+        <h3>Konten Promo</h3>
+        <div class="input-group">
+          <label for="eyebrow">Label Atas</label>
+          <input type="text" id="eyebrow" placeholder="🔥 Limited Time" autocomplete="off"/>
+        </div>
+        <div class="input-group">
+          <label for="headline">Judul Utama</label>
+          <input type="text" id="headline" placeholder="MEGA SALE" autocomplete="off"/>
+        </div>
+        <div class="input-group">
+          <label for="subheadline">Deskripsi</label>
+          <input type="text" id="subheadline" placeholder="Up to 80% off everything" autocomplete="off"/>
+        </div>
+        <div class="style-controls">
+          <div class="input-group">
+            <label for="badge">Badge Diskon</label>
+            <input type="text" id="badge" placeholder="80% OFF" autocomplete="off"/>
+          </div>
+          <div class="input-group">
+            <label for="cta">Teks Tombol</label>
+            <input type="text" id="cta" placeholder="Shop Now" autocomplete="off"/>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>Gaya Visual</h3>
+        <div class="style-controls">
+          <div class="input-group">
+            <label for="theme">Tema Warna</label>
+            <select id="theme">
+              <option value="green">Emerald Green</option>
+              <option value="blue">Ocean Blue</option>
+              <option value="purple">Royal Purple</option>
+              <option value="orange">Sunset Orange</option>
+              <option value="pink">Rose Pink</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label for="style">Gaya Layout</label>
+            <select id="style">
+              <option value="modern">Modern Gradient</option>
+              <option value="bold">Bold Contrast</option>
+              <option value="minimal">Clean Minimal</option>
+              <option value="vibrant">Vibrant Pop</option>
+            </select>
+          </div>
+        </div>
+        <div class="input-group">
+          <label for="texture">Tekstur Latar</label>
+          <div class="flex gap-2">
+            <select id="texture" class="flex-1">
+              <option value="default">Soft Glow</option>
+              <option value="geometric">Geometric Pattern</option>
+              <option value="dots">Dotted Grid</option>
+              <option value="waves">Wave Lines</option>
+              <option value="hexagon">Hexagon Mesh</option>
+              <option value="circuit">Circuit Board</option>
+              <option value="organic">Organic Shapes</option>
+              <option value="mesh">Grid Mesh</option>
+              <option value="noise">Random Noise</option>
+            </select>
+            <button type="button" onclick="randomizeTexture()" class="px-4 rounded-xl bg-gradient-to-r from-brand to-brand-dark text-white font-semibold">🎲 Acak</button>
+          </div>
+        </div>
+        <div class="export-section">
+          <button class="export-btn" type="button" onclick="exportPromo()">📸 Unduh PNG Resolusi Tinggi</button>
+        </div>
+      </div>
+    </section>
+
+    <aside class="promo-stage" aria-live="polite">
+      <div class="promo-canvas" id="promoCanvas">
+        <div class="promo-background" id="promoBackground"></div>
+        <div class="promo-pattern" id="promoPattern"></div>
+        <div class="promo-content">
+          <div class="promo-header">
+            <div class="promo-eyebrow" id="eyebrowText">🔥 Limited Time</div>
+            <h2 class="promo-headline" id="headlineText">MEGA SALE</h2>
+            <p class="promo-subheadline" id="subheadlineText">Up to 80% off everything</p>
+          </div>
+          <div class="promo-footer">
+            <div class="promo-badge" id="badgeText">80% OFF</div>
+            <button class="promo-cta" id="ctaText" type="button">Shop Now</button>
+          </div>
+        </div>
+        <div class="promo-logo">PixelDew</div>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<footer class="bg-ink text-white text-center py-6 mt-16">
+  &copy; 2025 PixelDew
+</footer>
+
+<script>
+  const defaultConfig = {
+    eyebrow: '🔥 Limited Time',
+    headline: 'MEGA SALE',
+    subheadline: 'Up to 80% off everything',
+    badge: '80% OFF',
+    cta: 'Shop Now'
+  };
+
+  const templates = {
+    'mega-sale': {
+      eyebrow: '🔥 Limited Time',
+      headline: 'MEGA SALE',
+      subheadline: 'Up to 80% off everything',
+      badge: '80% OFF',
+      cta: 'Shop Now'
+    },
+    'flash-deal': {
+      eyebrow: '⚡ 24 Jam Saja',
+      headline: 'FLASH DEAL',
+      subheadline: 'Diskon kilat tanpa tunggu',
+      badge: '60% OFF',
+      cta: 'Ambil Sekarang'
+    },
+    'new-drop': {
+      eyebrow: '✨ Baru Hadir',
+      headline: 'NEW DROP',
+      subheadline: 'Rilis koleksi edisi terbaru',
+      badge: 'NEW',
+      cta: 'Jelajahi'
+    },
+    'bundle-pack': {
+      eyebrow: '📦 Paket Spesial',
+      headline: '3 FOR 2',
+      subheadline: 'Gabungkan item favorit Anda',
+      badge: 'BUNDLE',
+      cta: 'Pilih Paket'
+    },
+    'weekend-special': {
+      eyebrow: '🎉 Weekend Only',
+      headline: 'WEEKEND SPECIAL',
+      subheadline: 'Sabtu & Minggu penuh bonus',
+      badge: '48H',
+      cta: 'Nikmati Sekarang'
+    },
+    'clearance': {
+      eyebrow: '🏷️ Cuci Gudang',
+      headline: 'CLEARANCE',
+      subheadline: 'Stok terakhir harga miring',
+      badge: '90% OFF',
+      cta: 'Buru Diskon'
+    }
+  };
+
+  const themes = {
+    green: {
+      primary: '#22C55E',
+      secondary: '#16a34a',
+      accent: '#15803d'
+    },
+    blue: {
+      primary: '#3B82F6',
+      secondary: '#2563EB',
+      accent: '#1D4ED8'
+    },
+    purple: {
+      primary: '#8B5CF6',
+      secondary: '#7C3AED',
+      accent: '#6D28D9'
+    },
+    orange: {
+      primary: '#F97316',
+      secondary: '#EA580C',
+      accent: '#DC2626'
+    },
+    pink: {
+      primary: '#EC4899',
+      secondary: '#DB2777',
+      accent: '#BE185D'
+    }
+  };
+
+  function loadTemplate(key) {
+    const template = templates[key];
+    if (!template) return;
+
+    document.getElementById('eyebrow').value = template.eyebrow;
+    document.getElementById('headline').value = template.headline;
+    document.getElementById('subheadline').value = template.subheadline;
+    document.getElementById('badge').value = template.badge;
+    document.getElementById('cta').value = template.cta;
+    updatePreview();
+  }
+
+  function updatePreview() {
+    const eyebrow = document.getElementById('eyebrow').value || defaultConfig.eyebrow;
+    const headline = document.getElementById('headline').value || defaultConfig.headline;
+    const subheadline = document.getElementById('subheadline').value || defaultConfig.subheadline;
+    const badge = document.getElementById('badge').value || defaultConfig.badge;
+    const cta = document.getElementById('cta').value || defaultConfig.cta;
+    const themeKey = document.getElementById('theme').value || 'green';
+    const style = document.getElementById('style').value || 'modern';
+    const texture = document.getElementById('texture').value || 'default';
+
+    document.getElementById('eyebrowText').textContent = eyebrow;
+    document.getElementById('headlineText').textContent = headline;
+    document.getElementById('subheadlineText').textContent = subheadline;
+    document.getElementById('badgeText').textContent = badge;
+    document.getElementById('ctaText').textContent = cta;
+
+    const { primary, secondary, accent } = themes[themeKey];
+    const background = document.getElementById('promoBackground');
+
+    if (style === 'modern') {
+      background.style.background = `linear-gradient(135deg, ${primary} 0%, ${secondary} 50%, ${accent} 100%)`;
+    } else if (style === 'bold') {
+      background.style.background = `linear-gradient(45deg, ${primary} 0%, ${accent} 100%)`;
+    } else if (style === 'minimal') {
+      background.style.background = `linear-gradient(180deg, ${primary} 0%, ${secondary} 100%)`;
+    } else {
+      background.style.background = `radial-gradient(circle at center, ${primary} 0%, ${accent} 100%)`;
+    }
+
+    const pattern = document.getElementById('promoPattern');
+    pattern.className = 'promo-pattern';
+    if (texture !== 'default') {
+      pattern.classList.add(`texture-${texture}`);
+    }
+  }
+
+  function randomizeTexture() {
+    const options = ['default', 'geometric', 'dots', 'waves', 'hexagon', 'circuit', 'organic', 'mesh', 'noise'];
+    const random = options[Math.floor(Math.random() * options.length)];
+    document.getElementById('texture').value = random;
+    updatePreview();
+  }
+
+  function exportPromo() {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = 1200;
+    canvas.height = 1200;
+
+    const themeKey = document.getElementById('theme').value || 'green';
+    const style = document.getElementById('style').value || 'modern';
+    const { primary, secondary, accent } = themes[themeKey];
+
+    let gradient;
+    if (style === 'modern') {
+      gradient = ctx.createLinearGradient(0, 0, 1200, 1200);
+      gradient.addColorStop(0, primary);
+      gradient.addColorStop(0.5, secondary);
+      gradient.addColorStop(1, accent);
+    } else if (style === 'bold') {
+      gradient = ctx.createLinearGradient(0, 0, 1200, 0);
+      gradient.addColorStop(0, primary);
+      gradient.addColorStop(1, accent);
+    } else if (style === 'minimal') {
+      gradient = ctx.createLinearGradient(0, 0, 0, 1200);
+      gradient.addColorStop(0, primary);
+      gradient.addColorStop(1, secondary);
+    } else {
+      gradient = ctx.createRadialGradient(600, 600, 100, 600, 600, 700);
+      gradient.addColorStop(0, primary);
+      gradient.addColorStop(1, accent);
+    }
+
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, 1200, 1200);
+
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+    ctx.font = '28px Inter';
+    ctx.textAlign = 'center';
+    ctx.fillText(document.getElementById('eyebrow').value || defaultConfig.eyebrow, 600, 200);
+
+    ctx.font = 'bold 130px "Space Grotesk"';
+    ctx.fillStyle = '#ffffff';
+    ctx.fillText(document.getElementById('headline').value || defaultConfig.headline, 600, 360);
+
+    ctx.font = '36px Inter';
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+    ctx.fillText(document.getElementById('subheadline').value || defaultConfig.subheadline, 600, 430);
+
+    ctx.fillStyle = '#FACC15';
+    ctx.beginPath();
+    ctx.arc(320, 820, 110, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = '#1f2937';
+    ctx.font = 'bold 36px "Space Grotesk"';
+    ctx.fillText((document.getElementById('badge').value || defaultConfig.badge).toUpperCase(), 320, 835);
+
+    ctx.fillStyle = '#ffffff';
+    ctx.beginPath();
+    ctx.roundRect(640, 760, 320, 90, 45);
+    ctx.fill();
+
+    ctx.fillStyle = '#1f2937';
+    ctx.font = '600 30px "Space Grotesk"';
+    ctx.fillText(document.getElementById('cta').value || defaultConfig.cta, 800, 820);
+
+    const link = document.createElement('a');
+    link.download = 'pixeldew-promo-studio.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  }
+
+  document.querySelectorAll('.template-card').forEach((card) => {
+    card.addEventListener('click', () => {
+      document.querySelectorAll('.template-card').forEach((item) => item.classList.remove('active'));
+      card.classList.add('active');
+      loadTemplate(card.dataset.template);
+    });
+  });
+
+  ['eyebrow', 'headline', 'subheadline', 'badge', 'cta', 'theme', 'style', 'texture']
+    .forEach((id) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const eventName = el.tagName === 'SELECT' ? 'change' : 'input';
+      el.addEventListener(eventName, updatePreview);
+    });
+
+  if (typeof CanvasRenderingContext2D.prototype.roundRect !== 'function') {
+    CanvasRenderingContext2D.prototype.roundRect = function (x, y, width, height, radius) {
+      const r = Math.min(radius, width / 2, height / 2);
+      this.beginPath();
+      this.moveTo(x + r, y);
+      this.arcTo(x + width, y, x + width, y + height, r);
+      this.arcTo(x + width, y + height, x, y + height, r);
+      this.arcTo(x, y + height, x, y, r);
+      this.arcTo(x, y, x + width, y, r);
+      this.closePath();
+      return this;
+    };
+  }
+
+  loadTemplate('mega-sale');
+</script>
+
+<script src="./assets/cart.js"></script>
+</body>
+</html>
